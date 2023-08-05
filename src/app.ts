@@ -3,7 +3,6 @@ import express, { Response } from 'express';
 import config from 'config';
 import validateEnv from './utils/validateEnv';
 import { PrismaClient } from '@prisma/client';
-import redisClient from './utils/connectRedis';
 
 validateEnv();
 
@@ -13,10 +12,9 @@ const app = express();
 async function bootstrap() {
   // Testing
   app.get('/api/healthchecker', async (_, res: Response) => {
-    const message = await redisClient.get('try');
     res.status(200).json({
       status: 'success',
-      message,
+      message: 'server running ✅',
     });
   });
 
