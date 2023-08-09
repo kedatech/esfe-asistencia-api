@@ -7,29 +7,145 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
 
-model User{
-  @@map(name: "users")
+  id       String   @id @default(uuid())
+  name     String   @db.VarChar(255)
+  email    String   @unique
+  photo    String?  @default("default.png")
+  verified Boolean? @default(false)
 
-  id String  @id @default(uuid())
-  name String  @db.VarChar(255)
-  email String @unique
-  photo String? @default("default.png")
-  verified Boolean? @default(false) 
-  
   password String
-  role RoleEnumType? @default(user)
+  role     RoleEnumType? @default(user)
 
-  verificationCode String? @db.Text @unique
+  verificationCode String? @unique @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([email, verificationCode])
   @@index([email, verificationCode])
+  @@map(name: "users")
 }
 
 enum RoleEnumType {
   user
   admin
+}
+
+model Docente {
+  id           Int      @id @default(autoincrement())
+  fullName     String
+  academicLoad Int
+  createdAt    DateTime
+  huellaId     Int?     @unique @map("HuellaId")
+  Huella       Huella?  @relation(fields: [huellaId], references: [id])
+}
+
+model Espacio {
+  id        Int      @id @default(autoincrement())
+  name      String
+  capacity  Int
+  createdAt DateTime
+}
+
+model Duracion {
+  id        Int      @id @default(autoincrement())
+  startTime DateTime
+  endTime   DateTime
+  createdAt DateTime
+}
+
+model Dia {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime
+}
+
+model Ciclo {
+  id        Int      @id @default(autoincrement())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime
+}
+
+model Modulo {
+  id        Int      @id @default(autoincrement())
+  name      String
+  tipo      String
+  createdAt DateTime
+}
+
+model Turno {
+  id         Int      @id @default(autoincrement())
+  horaInicio DateTime
+  horaFin    DateTime
+  createdAt  DateTime
+  grupo      Grupo[]
+}
+
+model Grupo {
+  id               Int          @id @default(autoincrement())
+  name             String
+  numberOfStudents Int
+  turnoId          Int          @map("TurnoId")
+  createdAt        DateTime
+  turno            Turno        @relation(fields: [turnoId], references: [id])
+  estudiante       Estudiante[]
+}
+
+model Clase {
+  id         Int      @id @default(autoincrement())
+  cicloId    Int
+  espacioId  Int
+  duracionId Int
+  diaId      Int
+  docenteId  Int
+  grupoId    Int
+  moduloId   Int
+  startDate  DateTime
+  endDate    DateTime
+  createdAt  DateTime
+}
+
+model Estudiante {
+  id         Int          @id @default(autoincrement())
+  grupoId    Int
+  huellaId   Int?         @unique
+  grupo      Grupo        @relation(fields: [grupoId], references: [id])
+  huella     Huella?      @relation(fields: [huellaId], references: [id])
+  asistencia Asistencia[] //
+}
+
+model Huella {
+  id         Int         @id @default(autoincrement())
+  muestra    Bytes
+  docente    Docente?
+  estudiante Estudiante?
+}
+
+model Asistencia {
+  id             Int          @id @default(autoincrement())
+  estudianteId   Int
+  fecha          DateTime
+  nomenclaturaId Int
+  criterioId     Int
+  estudiante     Estudiante   @relation(fields: [estudianteId], references: [id])
+  nomenclatura   Nomenclatura @relation(fields: [nomenclaturaId], references: [id])
+  criterio       Criterio     @relation(fields: [criterioId], references: [id])
+}
+
+model Nomenclatura {
+  id         Int          @id @default(autoincrement())
+  letra      String
+  concepto   String
+  asistencia Asistencia[]
+}
+
+model Criterio {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  descripcion String
+  asistencia  Asistencia[]
 }
