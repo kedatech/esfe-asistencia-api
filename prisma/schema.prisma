@@ -9,12 +9,13 @@ datasource db {
 
 generator dbml {
   provider = "prisma-dbml-generator"
-  output = "./generate"
+  output   = "./generate"
 }
+
 generator erd {
-  provider  = "prisma-erd-generator"
-  output    = "./generate/ERD.png"
-  theme     = "forest"
+  provider = "prisma-erd-generator"
+  output   = "./generate/ERD.png"
+  theme    = "forest"
 }
 
 model User {
@@ -57,17 +58,19 @@ enum RoleEnumType {
 // }
 
 model Espacio {
-  id        Int      @id @default(autoincrement())
-  name      String
-  capacity  Int
-  type      EspacioType
-  createdAt DateTime
-  clase     Clase[]
+  id            Int         @id @default(autoincrement())
+  name          String
+  capacity      Int
+  espacioTypeId Int
+  espacioType   EspacioType @relation(fields: [espacioTypeId], references: [id])
+  createdAt     DateTime
+  clase         Clase[]
 }
 
-enum EspacioType {
-  labotario
-  aula
+model EspacioType {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  espacio Espacio[]
 }
 
 model Duracion {
@@ -76,6 +79,7 @@ model Duracion {
   endTime   DateTime
   createdAt DateTime
   clase     Clase[]
+
   @@unique([startTime, endTime])
   @@index([startTime, endTime])
 }
@@ -159,18 +163,20 @@ model Clase {
 // }
 
 model Huella {
-  id         Int         @id @default(autoincrement())
-  muestra    Bytes
-  rol         roles
-  docenteId   Int?
-  estudianteId   Int?
+  id           Int   @id @default(autoincrement())
+  muestra      Bytes
+  rolId        Int
+  roles        Rol   @relation(fields: [rolId], references: [id])
+  docenteId    Int?
+  estudianteId Int?
   // docente    Docente[]
   // estudiante Estudiante?
 }
 
-enum roles {
-  Estudiante
-  Docente 
+model Rol {
+  id     Int      @id @default(autoincrement())
+  name   String   @unique
+  huella Huella[]
 }
 
 model Asistencia {
