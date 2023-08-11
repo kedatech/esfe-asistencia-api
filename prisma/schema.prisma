@@ -7,6 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+  output = "./generate"
+}
+generator erd {
+  provider  = "prisma-erd-generator"
+  output    = "./generate/ERD.png"
+  theme     = "forest"
+}
+
 model User {
   id       String   @id @default(uuid())
   name     String   @db.VarChar(255)

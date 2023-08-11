@@ -3,3 +3,6 @@ node_modules
 
 build/
 .env
+
+# digarama ER y dbml generado por prisma con -> npx prisma generate
+generate/
