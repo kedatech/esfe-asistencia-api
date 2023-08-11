@@ -1,1 +1,25 @@
-GET http://localhost:8000/api/huella
+@api = http://localhost:8000/api
+
+### Obtener lista de espacios
+GET {{api}}/espacio
+
+### Crear un nuevo espacio
+POST {{api}}/espacio
+content-type: application/json
+
+{
+    "name": "lab. info. 5",
+    "capacity": 10,
+    "espacioTypeId": 4
+}
+
+### Eliminar un espacio
+DELETE {{api}}/espacio/5
+
+### Actualizar parcialmente un espacio
+PATCH {{api}}/espacio/6
+content-type: application/json
+
+{
+    "capacity": 3
+}
