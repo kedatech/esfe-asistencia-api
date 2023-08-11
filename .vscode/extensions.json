@@ -4,6 +4,7 @@
     "mikestead.dotenv",
     "cweijan.vscode-mysql-client2",
     "ms-azuretools.vscode-docker",
-    "rangav.vscode-thunder-client"
+    "rangav.vscode-thunder-client",
+    "humao.rest-client"
   ]
 }
