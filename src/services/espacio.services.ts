@@ -1,4 +1,4 @@
-import { CreateEspacioInput } from '../schemas/espacio.schemas'
+import { CreateEspacioInput, UpdateEspacioInput } from '../schemas/espacio.schemas'
 import { prisma } from '../lib/prisma'
 
 export class EspacioService {
@@ -15,6 +15,13 @@ export class EspacioService {
   create(data: CreateEspacioInput){
     return prisma.espacio.create({
       data: data
+    })
+  }
+
+  update(id: number, data: UpdateEspacioInput){
+    return prisma.espacio.update({
+      where: { id: id},
+      data
     })
   }
 

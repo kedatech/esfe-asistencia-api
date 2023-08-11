@@ -1,9 +1,11 @@
-import { object, string, TypeOf, z } from 'zod';
+import { object, TypeOf, z } from 'zod';
+import { stringToInt } from '../utils/stringParseable'
 
 const id = z.number({required_error: 'El ID del espacio es requerido'}).int().positive()
 const name = z.string({required_error : 'El nombre es requerido' })
 const capacity = z.number({required_error : 'La capacidad es requerida' }).int().positive()
 const espacioTypeId = z.number({ required_error: 'El tipo de espacio es requerido'}).int().positive()
+
 
 export const createEspacioSchema = object({
   body: object({
@@ -14,6 +16,9 @@ export const createEspacioSchema = object({
 });
 
 export const updateEspacioSchema = object({
+  params: object({
+    id: stringToInt
+  }),
   body: object({
     name: name.optional(),
     capacity: capacity.optional(),
@@ -27,13 +32,13 @@ export const updateEspacioSchema = object({
 
 export const deleteEspacioSchema = object({
   params: object({
-    id
+    id: stringToInt
   })
 });
 
 export const getEspacioSchema = object({
   params: object({
-    id
+    id: stringToInt
   })
 });
 
