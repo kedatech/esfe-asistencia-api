@@ -4,10 +4,15 @@ import config from 'config';
 import validateEnv from './utils/validateEnv';
 import { PrismaClient } from '@prisma/client';
 
+import routes from './routes'
+
 validateEnv();
 
 const prisma = new PrismaClient();
 const app = express();
+app.use(express.json())
+
+app.use('/api',routes)
 
 async function bootstrap() {
   // Testing
