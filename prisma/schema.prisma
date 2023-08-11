@@ -59,11 +59,11 @@ enum RoleEnumType {
 
 model Espacio {
   id            Int         @id @default(autoincrement())
-  name          String
+  name          String      @unique
   capacity      Int
   espacioTypeId Int
   espacioType   EspacioType @relation(fields: [espacioTypeId], references: [id])
-  createdAt     DateTime
+  createdAt     DateTime    @default(now())
   clase         Clase[]
 }
 
@@ -77,7 +77,7 @@ model Duracion {
   id        Int      @id @default(autoincrement())
   startTime DateTime
   endTime   DateTime
-  createdAt DateTime
+  createdAt DateTime @default(now())
   clase     Clase[]
 
   @@unique([startTime, endTime])
@@ -87,7 +87,7 @@ model Duracion {
 model Dia {
   id        Int      @id @default(autoincrement())
   name      String   @unique
-  createdAt DateTime
+  createdAt DateTime @default(now())
   clase     Clase[]
 }
 
@@ -96,7 +96,7 @@ model CicloClase {
   name      String   @unique
   startDate DateTime
   endDate   DateTime
-  createdAt DateTime
+  createdAt DateTime @default(now())
   clase     Clase[]
 }
 
@@ -145,7 +145,7 @@ model Clase {
   // modulo     Modulo     @relation(fields: [moduloId], references: [id])
   startDate  DateTime
   endDate    DateTime
-  createdAt  DateTime
+  createdAt  DateTime   @default(now())
 
   // restricciones
   @@unique([cicloId, espacioId, duracionId, diaId, docenteId, grupoId, moduloId])
@@ -188,18 +188,19 @@ model Asistencia {
   // estudiante     Estudiante   @relation(fields: [estudianteId], references: [id])
   nomenclatura   Nomenclatura @relation(fields: [nomenclaturaId], references: [id])
   criterio       Criterio     @relation(fields: [criterioId], references: [id])
+  createAt       DateTime     @default(now())
 }
 
 model Nomenclatura {
   id         Int          @id @default(autoincrement())
-  letra      String
+  letra      String       @unique
   concepto   String
   asistencia Asistencia[]
 }
 
 model Criterio {
   id          Int          @id @default(autoincrement())
-  nombre      String
+  nombre      String       @unique
   descripcion String
   asistencia  Asistencia[]
 }
