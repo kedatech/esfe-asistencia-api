@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
     "migrate": "npx prisma migrate dev --name $npm_config_name && npx prisma generate",
-    "build": "tsc . -p"
+    "build": "prisma genertate && tsc . -p"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^10.3.0",
