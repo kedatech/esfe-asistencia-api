@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 
 import routes from './routes'
 
-validateEnv();
+// validateEnv();
 
 const prisma = new PrismaClient();
 const app = express();
