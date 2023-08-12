@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
     "migrate": "npx prisma migrate dev --name $npm_config_name && npx prisma generate",
-    "build": "prisma generate"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
+    "setup": "npm run migrate && npm run seed"
   },
   "devDependencies": {
     "@types/config": "^0.0.41",
