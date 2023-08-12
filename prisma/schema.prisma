@@ -75,8 +75,8 @@ model EspacioType {
 
 model Duracion {
   id        Int      @id @default(autoincrement())
-  startTime DateTime
-  endTime   DateTime
+  startTime DateTime @db.Time
+  endTime   DateTime @db.Time
   createdAt DateTime @default(now())
   clase     Clase[]
 
