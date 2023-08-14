@@ -1,29 +1,36 @@
 import { esfeapi } from './config'
+import { returnProvider, IReturn} from '../../utils/ReturnProvider'
+import { Docente } from '../../utils/interface/Docente'
 
-const entity = '/docentes'
-
-interface Docente {
-  id: number,
-  nombre: string,
-  correo: string,
-  telefono: string,
-  carreraId: number
-}
+const route = '/docentes'
 
 export class DocenteService {
-  async getAll(){
-    const { data } = await esfeapi.get(entity)
-    console.log(data)
-    return data
+  DocenteService(){
+
   }
 
-  async getOne(id: number){
-    const { data } = await esfeapi.get<Docente[]>(entity)
-    if(!data) return false
+  async getAll(): Promise<IReturn<Docente[]>> {
+    try {
+      const { data } = await esfeapi.get<Docente[]>(route)
+      console.log(data)
+      return returnProvider(data, 'docentes fetched', true)
+    } catch (error) {
+      return returnProvider([], 'error', false)
+    }
+  }
 
-    const result = data.filter( docente => docente.id === id)[0]
-
-    if(!result) return false
-    return result
+  async getOne(id: number): Promise<IReturn<Docente | null>>{
+    try {
+      const { data } = await esfeapi.get<Docente[]>(route)
+      if(!data) return returnProvider(null, 'error al obtener docente', false)
+  
+      const docente = data.filter( docente => docente.id === id)[0]
+  
+      if(!docente) return returnProvider(null, 'no existen un docente', false)
+      return returnProvider(docente, 'docente obtenido', true)
+      
+    } catch (error) {
+      return returnProvider(null, 'error al obtener docente', false)
+    }
   }
 }
