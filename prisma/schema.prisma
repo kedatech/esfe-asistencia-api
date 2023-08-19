@@ -141,9 +141,14 @@ model Clase {
   endDate    DateTime
   createdAt  DateTime   @default(now())
 
-  // restricciones
+  // RESTRICCIONES
+  // no existiran dos clases iguales
   @@unique([cicloId, espacioId, duracionId, diaId, docenteId, grupoId, moduloId])
   @@index([cicloId, espacioId, duracionId, diaId, docenteId, grupoId, moduloId])
+
+  // no existiran dos que se sobrepongan 
+  @@unique([cicloId, espacioId, duracionId, diaId])
+  @@index([cicloId, espacioId, duracionId, diaId])
 }
 
 // model Estudiante {
