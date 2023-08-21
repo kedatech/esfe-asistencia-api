@@ -4,10 +4,10 @@ import { stringToInt } from '../utils/stringParseable'
 const id = z.number({required_error: 'El ID del espacio es requerido'}).int().positive()
 const name = z.string({required_error : 'El nombre es requerido' })
 const capacity = z.number({required_error : 'La capacidad es requerida' }).int().positive()
-const espacioTypeId = z.number({ required_error: 'El tipo de espacio es requerido'}).int().positive()
+const espacioTypeId = z.number({ required_error: 'El tipo de  es requerido'}).int().positive()
 
 
-export const createEspacioSchema = object({
+export const createSchema = object({
   body: object({
     name,
     capacity,
@@ -15,7 +15,7 @@ export const createEspacioSchema = object({
   }).strict(),
 });
 
-export const updateEspacioSchema = object({
+export const updateSchema = object({
   params: object({
     id: stringToInt
   }),
@@ -30,29 +30,29 @@ export const updateEspacioSchema = object({
     }),
 });
 
-export const deleteEspacioSchema = object({
+export const deleteSchema = object({
   params: object({
     id: stringToInt
   })
 });
 
-export const getEspacioSchema = object({
+export const getSchema = object({
   params: object({
     id: stringToInt
   })
 });
 
-// export const listEspaciosSchema = object({
+// export const listsSchema = object({
 //   query: object({
 //     type: union([
-//       z.nativeEnum(EspacioType, { invalid_type_error: 'Tipo de espacio inválido' }),
+//       z.nativeEnum(Type, { invalid_type_error: 'Tipo de  inválido' }),
 //       z.undefined(),
 //     ]),
 //   }),
 // });
 
-export type CreateEspacioInput = TypeOf<typeof createEspacioSchema>['body'];
-export type UpdateEspacioInput = TypeOf<typeof updateEspacioSchema>['body'];
-export type DeleteEspacioParams = TypeOf<typeof deleteEspacioSchema>['params'];
-export type GetEspacioParams = TypeOf<typeof getEspacioSchema>['params'];
-// export type ListEspaciosQuery = TypeOf<typeof listEspaciosSchema>['query'];
+export type CreateInput = TypeOf<typeof createSchema>['body'];
+export type UpdateInput = TypeOf<typeof updateSchema>['body'];
+export type DeleteParams = TypeOf<typeof deleteSchema>['params'];
+export type GetParams = TypeOf<typeof getSchema>['params'];
+// export type ListsQuery = TypeOf<typeof listsSchema>['query'];

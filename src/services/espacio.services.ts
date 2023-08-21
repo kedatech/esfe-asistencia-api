@@ -1,7 +1,7 @@
-import { CreateEspacioInput, UpdateEspacioInput } from '../schemas/espacio.schemas'
+import { CreateInput, UpdateInput } from '../schemas/espacio.schemas'
 import { prisma } from '../lib/prisma'
 
-export class EspacioService {
+export class Service {
   getAll(){
     return prisma.espacio.findMany()
   }
@@ -12,13 +12,13 @@ export class EspacioService {
     })
   }
 
-  create(data: CreateEspacioInput){
+  create(data: CreateInput){
     return prisma.espacio.create({
       data: data
     })
   }
 
-  update(id: number, data: UpdateEspacioInput){
+  update(id: number, data: UpdateInput){
     return prisma.espacio.update({
       where: { id: id},
       data
