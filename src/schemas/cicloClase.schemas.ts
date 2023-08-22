@@ -1,5 +1,5 @@
 import { object, TypeOf, z } from 'zod';
-import { stringToInt } from '../utils/stringParseable'
+import { stringToInt } from '../utils/validators/stringParseable'
 
 const id = z.number({required_error: 'El ID del ciclo  es requerido'}).int().positive()
 const name = z.string({required_error : 'El nombre es requerido' })

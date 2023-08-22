@@ -1,11 +1,11 @@
 import { z, object, TypeOf } from 'zod'
-import { stringToInt } from '../utils/stringParseable'
+import { stringToInt } from '../utils/validators/stringParseable'
 
 const validId = z.number({required_error: 'El id es requerido'}).int().positive()
 const startDate = z.date()
 const endDate = z.date()
 
-export const createEspacioSchema = object({
+export const createSchema = object({
   body: object({
     cicloId: validId,
     espacioId: validId,
@@ -19,7 +19,7 @@ export const createEspacioSchema = object({
   }).strict(),
 });
 
-export const updateEspacioSchema = object({
+export const updateSchema = object({
   params: object({
     id: stringToInt
   }),
@@ -41,19 +41,19 @@ export const updateEspacioSchema = object({
 });
 
 
-export const deleteEspacioSchema = object({
+export const deleteSchema = object({
   params: object({
     id: stringToInt
   })
 });
 
-export const getEspacioSchema = object({
+export const getSchema = object({
   params: object({
     id: stringToInt
   })
 });
 
-export type CreateEspacioInput = TypeOf<typeof createEspacioSchema>['body'];
-export type UpdateEspacioInput = TypeOf<typeof updateEspacioSchema>['body'];
-export type DeleteEspacioParams = TypeOf<typeof deleteEspacioSchema>['params'];
-export type GetEspacioParams = TypeOf<typeof getEspacioSchema>['params'];
+export type CreateInput = TypeOf<typeof createSchema>['body'];
+export type UpdateInput = TypeOf<typeof updateSchema>['body'];
+export type DeleteParams = TypeOf<typeof deleteSchema>['params'];
+export type GetParams = TypeOf<typeof getSchema>['params'];
