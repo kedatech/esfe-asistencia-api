@@ -14,7 +14,7 @@ function esUIDRFIDValido(uid: string) {
 // Crear un validador personalizado con zod
 export const uidRFIDValidator = z.custom((uid) => {
   if (!esUIDRFIDValido(String(uid))) {
-    throw new Error("UID de RFID inválido");
+    false
   }
-  return uid;
+  return true;
 });

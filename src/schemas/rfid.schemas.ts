@@ -1,19 +1,14 @@
 import { object, TypeOf, z } from 'zod';
 import { stringToInt } from '../utils/validators/stringParseable'
-import { uidRFIDValidator } from '../utils/validators/isRFID'
 
-// model Rfid {
-//   id           Int   @id @default(autoincrement())
-//   uid      String
-//   estudianteId Int
-// }
 const id = z.number({required_error: 'El ID del espacio es requerido'}).int().positive()
+const uid = z.string({required_error : 'El nombre es requerido' })
 const estudianteId = z.number({ required_error: 'El estudianteId es requerido'}).int().positive()
 
 
 export const createSchema = object({
   body: object({
-    uid: uidRFIDValidator,
+    uid: uid,
     estudianteId
   })
   .strict()
@@ -24,7 +19,7 @@ export const updateSchema = object({
     id: stringToInt
   }),
   body: object({
-    uid: uidRFIDValidator,
+    uid,
     estudianteId
   })
     .partial()
