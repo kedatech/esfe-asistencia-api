@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { createEspacioSchema, deleteEspacioSchema, updateEspacioSchema} from '../schemas/espacio.schemas'
+import { createSchema, deleteSchema, updateSchema} from '../schemas/espacio.schemas'
 import { validate } from '../../middlewares/validate'
 import { EspacioService } from '../services/espacio.services'
 
@@ -17,7 +17,7 @@ router.get('/', async (req: Request, res: Response) => {
 })
 
 router.post('/', 
-validate(createEspacioSchema), 
+validate(createSchema), 
 async (req: Request, res: Response) => {
   console.log(req.body)
   try {
@@ -29,7 +29,7 @@ async (req: Request, res: Response) => {
 })
 
 router.delete('/:id',
-validate(deleteEspacioSchema),
+validate(deleteSchema),
 async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
@@ -43,7 +43,7 @@ async (req: Request, res: Response) => {
 
 
 router.patch('/:id',
-validate(updateEspacioSchema),
+validate(updateSchema),
 async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)

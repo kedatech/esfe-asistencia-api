@@ -1,7 +1,7 @@
 import { CreateInput, UpdateInput } from '../schemas/espacio.schemas'
 import { prisma } from '../lib/prisma'
 
-export class Service {
+export class EspacioService {
   getAll(){
     return prisma.espacio.findMany()
   }
