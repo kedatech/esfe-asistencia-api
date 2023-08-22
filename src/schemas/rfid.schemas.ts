@@ -19,13 +19,8 @@ export const updateSchema = object({
     id: stringToInt
   }),
   body: object({
-    uid,
-    estudianteId
+    uid
   })
-    .partial()
-    .refine((data) => data.estudianteId !== undefined || data.uid !== undefined, {
-      message: 'Al menos una propiedad debe ser proporcionada para actualizar',
-    }),
 });
 
 export const deleteSchema = object({
