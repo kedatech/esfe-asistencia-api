@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { duracionesClase, espacioTypes, roles } from './defaultData'
+import { duracionesClase, espacioTypes } from './defaultData'
 
 const prisma = new PrismaClient()
 
@@ -14,15 +14,15 @@ async function main() {
 		console.log('espacio', espacio)
 	})
 
-	roles.forEach(async (el) => {
-		const rol = await prisma.rol.upsert({
-			where: { name: el },
-			update: {},
-			create: { name: el },
-		})
-		console.log('rol', rol)
+	// roles.forEach(async (el) => {
+	// 	const rol = await prisma.rol.upsert({
+	// 		where: { name: el },
+	// 		update: {},
+	// 		create: { name: el },
+	// 	})
+	// 	console.log('rol', rol)
 
-	})
+	// })
 
   // turnos.forEach(async (el) => {
   //   const turno = await prisma.turno.upsert({

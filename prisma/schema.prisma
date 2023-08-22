@@ -161,22 +161,17 @@ model Clase {
 //   asistencia Asistencia[]
 // }
 
-model Huella {
+model Rfid {
   id           Int   @id @default(autoincrement())
-  muestra      Bytes
-  rolId        Int
-  roles        Rol   @relation(fields: [rolId], references: [id])
-  docenteId    Int?
-  estudianteId Int?
-  // docente    Docente[]
-  // estudiante Estudiante?
+  uid      String
+  estudianteId Int
 }
 
-model Rol {
-  id     Int      @id @default(autoincrement())
-  name   String   @unique
-  huella Huella[]
-}
+// model Rol {
+//   id     Int      @id @default(autoincrement())
+//   name   String   @unique
+//   huella Rfid[]
+// }
 
 model Asistencia {
   id             Int          @id @default(autoincrement())
