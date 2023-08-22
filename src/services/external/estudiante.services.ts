@@ -1,5 +1,5 @@
 import { esfeapi } from './config'
-import { returnProvider, IReturn} from '../../utils/ReturnProvider'
+import { returnProvider, IReturn} from '../../utils/providers/ReturnProvider'
 import { Estudiante } from '../../utils/interface/Estudiante'
 
 const route = '/estudiantes'
