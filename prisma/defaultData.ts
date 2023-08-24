@@ -1,5 +1,5 @@
 export const espacioTypes = ['laboratorio', 'aula']
-export const roles = ['estudiante', 'docente']
+// export const roles = ['estudiante', 'docente']
 // export const turnos = ['mañana', 'tarde', 'noche']
 
 export const duracionesClase = [

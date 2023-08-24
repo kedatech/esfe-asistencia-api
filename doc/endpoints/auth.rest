@@ -1,0 +1,13 @@
+@api = http://localhost:8000/api
+
+### Obtener lista de espacios
+GET {{api}}/auth
+
+### Crear un nuevo espacio
+POST {{api}}/auth/login
+content-type: application/json
+
+{
+    "correo": "helen.contreras@esfe.agape.edu.sv",
+    "contrasenia": "123"
+}

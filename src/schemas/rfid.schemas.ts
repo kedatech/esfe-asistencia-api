@@ -2,17 +2,16 @@ import { object, TypeOf, z } from 'zod';
 import { stringToInt } from '../utils/validators/stringParseable'
 
 const id = z.number({required_error: 'El ID del espacio es requerido'}).int().positive()
-const name = z.string({required_error : 'El nombre es requerido' })
-const capacity = z.number({required_error : 'La capacidad es requerida' }).int().positive()
-const espacioTypeId = z.number({ required_error: 'El tipo de  es requerido'}).int().positive()
+const uid = z.string({required_error : 'El nombre es requerido' })
+const estudianteId = z.number({ required_error: 'El estudianteId es requerido'}).int().positive()
 
 
 export const createSchema = object({
   body: object({
-    name,
-    capacity,
-    espacioTypeId
-  }).strict(),
+    uid: uid,
+    estudianteId
+  })
+  .strict()
 });
 
 export const updateSchema = object({
@@ -20,14 +19,8 @@ export const updateSchema = object({
     id: stringToInt
   }),
   body: object({
-    name: name.optional(),
-    capacity: capacity.optional(),
-    espacioTypeId: espacioTypeId.optional()
+    uid
   })
-    .partial()
-    .refine((data) => data.capacity !== undefined || data.espacioTypeId !== undefined, {
-      message: 'Al menos una propiedad debe ser proporcionada para actualizar',
-    }),
 });
 
 export const deleteSchema = object({

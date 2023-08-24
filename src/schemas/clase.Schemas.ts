@@ -1,14 +1,19 @@
-import { object, TypeOf, z } from 'zod';
+import { z, object, TypeOf } from 'zod'
 import { stringToInt } from '../utils/validators/stringParseable'
 
-const id = z.number({required_error: 'El ID del ciclo  es requerido'}).int().positive()
-const name = z.string({required_error : 'El nombre es requerido' })
+const validId = z.number({required_error: 'El id es requerido'}).int().positive()
 const startDate = z.date()
 const endDate = z.date()
 
 export const createSchema = object({
   body: object({
-    name,
+    cicloId: validId,
+    espacioId: validId,
+    duracionId: validId,
+    diaId: validId,
+    docenteId: validId,
+    grupoId: validId,
+    moduloId: validId,
     startDate,
     endDate
   }).strict(),
@@ -19,15 +24,22 @@ export const updateSchema = object({
     id: stringToInt
   }),
   body: object({
-    name: name.optional(),
-    capacity: startDate.optional(),
-    TypeId: endDate.optional()
+    cicloId: validId,
+    espacioId: validId,
+    duracionId: validId,
+    diaId: validId,
+    docenteId: validId,
+    grupoId: validId,
+    moduloId: validId,
+    startDate,
+    endDate
   })
     .partial()
-    .refine((data) => data.capacity !== undefined || data.TypeId !== undefined, {
+    .refine((data) => data.cicloId !== undefined || data.espacioId !== undefined, {
       message: 'Al menos una propiedad debe ser proporcionada para actualizar',
     }),
 });
+
 
 export const deleteSchema = object({
   params: object({

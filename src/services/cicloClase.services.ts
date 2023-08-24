@@ -1,7 +1,7 @@
-import { CreateEspacioInput, UpdateEspacioInput } from '../schemas/cicloClase.schemas'
+import { CreateInput, UpdateInput } from '../schemas/cicloClase.schemas'
 import { prisma } from '../lib/prisma'
 
-export class CicloClase {
+export class CicloClaseServices {
   getAll(){
     return prisma.cicloClase.findMany()
   }
@@ -12,13 +12,13 @@ export class CicloClase {
     })
   }
 
-  create(data: CreateEspacioInput){
+  create(data: CreateInput){
     return prisma.cicloClase.create({
       data: data
     })
   }
 
-  update(id: number, data: UpdateEspacioInput){
+  update(id: number, data: UpdateInput){
     return prisma.cicloClase.update({
       where: { id: id},
       data
@@ -26,7 +26,7 @@ export class CicloClase {
   }
 
   delete(id: number){
-    return prisma.espacio.delete({
+    return prisma.cicloClase.delete({
       where: { id: id }
     })
   }
