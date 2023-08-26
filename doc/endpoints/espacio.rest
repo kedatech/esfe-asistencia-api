@@ -10,7 +10,7 @@ content-type: application/json
 {
     "name": "lab. info. 5",
     "capacity": 10,
-    "espacioTypeId": 4
+    "espacioTypeId": 1
 }
 
 ### Eliminar un espacio

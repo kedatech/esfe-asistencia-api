@@ -3,4 +3,5 @@ export interface Grupo {
   codigo: number
   anio: number
   carreraId: number
+  docenteId: number
 }

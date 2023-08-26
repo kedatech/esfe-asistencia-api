@@ -144,10 +144,9 @@ model Clase {
   // RESTRICCIONES
   // no existiran dos clases iguales
   @@unique([cicloId, espacioId, duracionId, diaId, docenteId, grupoId, moduloId])
-  @@index([cicloId, espacioId, duracionId, diaId, docenteId, grupoId, moduloId])
-
   // no existiran dos que se sobrepongan 
   @@unique([cicloId, espacioId, duracionId, diaId])
+  @@index([cicloId, espacioId, duracionId, diaId, docenteId, grupoId, moduloId])
   @@index([cicloId, espacioId, duracionId, diaId])
 }
 
@@ -162,9 +161,12 @@ model Clase {
 // }
 
 model Rfid {
-  id           Int   @id @default(autoincrement())
-  uid      String
+  id           Int    @id @default(autoincrement())
+  uid          String @unique
   estudianteId Int
+
+  @@unique([estudianteId, uid])
+  @@index([estudianteId, id])
 }
 
 // model Rol {

@@ -2,6 +2,9 @@ import { esfeapi } from './config'
 import { returnProvider, IReturn} from '../../utils/providers/ReturnProvider'
 import { Estudiante } from '../../utils/interface/Estudiante'
 
+import { GrupoService} from './grupo.services'
+const grupoService = new GrupoService()
+
 const route = '/estudiantes'
 
 export class EstudianteService {
@@ -31,6 +34,21 @@ export class EstudianteService {
       
     } catch (error) {
       return returnProvider(null, String(error), false)
+    }
+  }
+
+  async getByDocente(id: number): Promise<IReturn<Estudiante[]>> {
+    try {
+      const { data } = await esfeapi.get<Estudiante[]>(route)
+
+      const idsGruposDocente = (await grupoService.getByDocenteId(id)).data.map( grupo => grupo.id);
+      
+      console.log('grupos', idsGruposDocente)
+      const filtered = data.filter( estudiante => idsGruposDocente.includes(estudiante.grupoId))
+
+      return returnProvider(filtered, 'Estudiantes fetched', true)
+    } catch (error) {
+      return returnProvider([], String(error), false)
     }
   }
 }

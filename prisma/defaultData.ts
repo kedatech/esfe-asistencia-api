@@ -1,4 +1,5 @@
-export const espacioTypes = ['laboratorio', 'aula']
+export const espacioTypes = ['laboratorio', 'aula', 'virtual']
+export const virtualEspacios = ['sincrono', 'asincrono']
 // export const roles = ['estudiante', 'docente']
 // export const turnos = ['mañana', 'tarde', 'noche']
 
