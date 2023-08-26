@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { duracionesClase, espacioTypes } from './defaultData'
+import { duracionesClase, espacioTypes, virtualEspacios} from './defaultData'
 
 const prisma = new PrismaClient()
 
@@ -11,18 +11,22 @@ async function main() {
 			update: {},
 			create: { name: el },
 		})
+
 		console.log('espacio', espacio)
+
+		if(espacio.name === 'virtual'){
+			virtualEspacios.forEach(async (el) => {
+				const rol = await prisma.espacio.upsert({
+					where: { name: espacio.name },
+					update: {},
+					create: { capacity: 40, name: el, espacioTypeId: espacio.id},
+				})
+				console.log('virtual espacio', rol)
+		
+			})
+		}
 	})
 
-	// roles.forEach(async (el) => {
-	// 	const rol = await prisma.rol.upsert({
-	// 		where: { name: el },
-	// 		update: {},
-	// 		create: { name: el },
-	// 	})
-	// 	console.log('rol', rol)
-
-	// })
 
   // turnos.forEach(async (el) => {
   //   const turno = await prisma.turno.upsert({
