@@ -162,7 +162,7 @@ model Clase {
 
 model Rfid {
   id           Int    @id @default(autoincrement())
-  uid          String
+  uid          String @unique
   estudianteId Int
 
   @@unique([estudianteId, uid])
