@@ -33,4 +33,16 @@ export class GrupoService {
       return returnProvider(null, 'error al obtener grupo', false)
     }
   }
+
+  async getByDocenteId(id: number): Promise<IReturn<Grupo[]>> {
+    try {
+      const { data } = await esfeapi.get<Grupo[]>(route)
+      
+      const filtered = data.filter( grupo => grupo.docenteId === id)
+      if(filtered.length === 0) return returnProvider(filtered, `El docente con ${id} no tiene grupos`, true)
+      return returnProvider(filtered, `Grupos del docente con id ${id}`, true)
+    } catch (error) {
+      return returnProvider([], 'error al obtener grupo', false)
+    }
+  }
 }
