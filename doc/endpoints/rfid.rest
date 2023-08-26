@@ -1,0 +1,25 @@
+@api = http://localhost:8000/api
+
+### Obtener lista de rfids
+GET {{api}}/rfid
+
+### Crear un nuevo rfid
+POST {{api}}/rfid
+content-type: application/json
+
+{
+    "uid": "63 2A OE 38",
+    "estudianteId": 1
+}
+
+### Eliminar un rfid
+DELETE {{api}}/rfid/1
+
+### Actualizar parcialmente un rfid
+PATCH {{api}}/rfid/1
+content-type: application/json
+
+{
+    "uid": "lab. info. 5",
+    "estudianteId": 10
+}
