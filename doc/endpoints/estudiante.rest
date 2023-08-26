@@ -1,0 +1,8 @@
+@api = http://localhost:8000/api
+
+### Obtener lista de estudiantes
+GET {{api}}/estudiante
+
+### Eliminar un estudiante
+GET {{api}}/estudiante/docente/3
+
