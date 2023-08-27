@@ -34,8 +34,8 @@ async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id)
     console.log('docente id',id)
-    const del = await service.getByDocente(id)
-    res.json(del)
+    const result = await service.getByDocente(id)
+    res.json(result)
   } catch (error) {
     res.status(400).json(error)
   }
