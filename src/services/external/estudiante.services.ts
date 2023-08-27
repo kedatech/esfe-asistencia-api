@@ -41,12 +41,27 @@ export class EstudianteService {
     try {
       const { data } = await esfeapi.get<Estudiante[]>(route)
 
-      const idsGruposDocente = (await grupoService.getByDocenteId(id)).data.map( grupo => grupo.id);
+      const grupos = await grupoService.getByDocenteId(id);
+      const idsGruposDocente = grupos.data.map( grupo => grupo.id);
       
       console.log('grupos', idsGruposDocente)
       const filtered = data.filter( estudiante => idsGruposDocente.includes(estudiante.grupoId))
 
-      return returnProvider(filtered, 'Estudiantes fetched', true)
+      const withGrupoName = filtered.map( estudiante => {
+        const grupoEstudiante = grupos.data.filter(el => el.id === estudiante.grupoId)[0]
+
+        if(grupoEstudiante !== undefined) {
+          const result = {
+            ...estudiante,
+            grupoName: String(`Grupo ${grupoEstudiante.codigo}`)
+          }
+          console.log("abeja")
+          return result
+        }
+        return estudiante
+      })
+
+      return returnProvider(withGrupoName, 'Estudiantes fetched', true)
     } catch (error) {
       return returnProvider([], String(error), false)
     }
