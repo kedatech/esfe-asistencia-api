@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { createSchema, deleteSchema, updateSchema} from '../schemas/clase.schemas'
+import { createSchema, deleteSchema, updateSchema} from '../schemas/clases.schemas'
 import { validate } from '../../middlewares/validate'
 import { ClaseService } from '../services/clase.services'
 
