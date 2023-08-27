@@ -4,5 +4,4 @@ export interface Estudiante {
   correo: string
   telefono: string
   grupoId: number
-  grupoName?: string
 }
