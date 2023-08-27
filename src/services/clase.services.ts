@@ -1,4 +1,4 @@
-import { CreateInput, UpdateInput} from '../schemas/clase.Schemas'
+import { CreateInput, UpdateInput} from '../schemas/clase.schemas'
 import { returnProvider } from '../utils/providers/ReturnProvider'
 import { prisma } from '../lib/prisma'
 
@@ -8,7 +8,7 @@ const docenteService = new DocenteService()
 const grupoService = new GrupoService()
 const moduloService = new ModuloService()
 
-export class CicloClase {
+export class ClaseService {
   getAll(){
     return prisma.clase.findMany()
   }
