@@ -1,69 +1,75 @@
-import { esfeapi } from './config'
-import { returnProvider, IReturn} from '../../utils/providers/ReturnProvider'
-import { Estudiante } from '../../utils/interface/Estudiante'
+import { esfeapi } from './config';
+import { returnProvider, IReturn } from '../../utils/providers/ReturnProvider';
+import { Estudiante } from '../../utils/interface/Estudiante';
+import { GrupoService } from './grupo.services';
+import { prisma } from '../../lib/prisma'
 
-import { GrupoService} from './grupo.services'
-const grupoService = new GrupoService()
+const grupoService = new GrupoService();
+const route = '/estudiantes';
 
-const route = '/estudiantes'
+interface EstudianteReturn extends Estudiante {
+  grupoName: string;
+  rfid: string | null;
+}
 
 export class EstudianteService {
-  EstudianteService(){
-
-  }
-
   async getAll(): Promise<IReturn<Estudiante[]>> {
     try {
-      const { data } = await esfeapi.get<Estudiante[]>(route)
-      console.log(data)
-      return returnProvider(data, 'Estudiantes fetched', true)
+      const { data } = await esfeapi.get<Estudiante[]>(route);
+      return returnProvider(data, 'Estudiantes fetched', true);
     } catch (error) {
-      return returnProvider([], String(error), false)
+      return returnProvider([], String(error), false);
     }
   }
 
-  async getOne(id: number): Promise<IReturn<Estudiante | null>>{
+  async getOne(id: number): Promise<IReturn<Estudiante | null>> {
     try {
-      const { data } = await esfeapi.get<Estudiante[]>(route)
-      if(!data) return returnProvider(null, 'error al obtener Estudiante', false)
-  
-      const Estudiante = data.filter( Estudiante => Estudiante.id === id)[0]
-  
-      if(!Estudiante) return returnProvider(null, 'no existen un Estudiante', false)
-      return returnProvider(Estudiante, 'Estudiante obtenido', true)
-      
+      const { data } = await esfeapi.get<Estudiante[]>(route);
+      const estudiante = data.find((e) => e.id === id);
+
+      if (!estudiante) {
+        return returnProvider(null, 'No existe un Estudiante', false);
+      }
+
+      return returnProvider(estudiante, 'Estudiante obtenido', true);
     } catch (error) {
-      return returnProvider(null, String(error), false)
+      return returnProvider(null, String(error), false);
     }
   }
 
-  async getByDocente(id: number): Promise<IReturn<Estudiante[]>> {
+  async getByDocente(id: number): Promise<IReturn<EstudianteReturn[]>> {
     try {
-      const { data } = await esfeapi.get<Estudiante[]>(route)
+      const { data } = await esfeapi.get<Estudiante[]>(route);
 
       const grupos = await grupoService.getByDocenteId(id);
-      const idsGruposDocente = grupos.data.map( grupo => grupo.id);
-      
-      console.log('grupos', idsGruposDocente)
-      const filtered = data.filter( estudiante => idsGruposDocente.includes(estudiante.grupoId))
+      const idsGruposDocente = grupos.data.map((grupo) => grupo.id);
 
-      const withGrupoName = filtered.map( estudiante => {
-        const grupoEstudiante = grupos.data.filter(el => el.id === estudiante.grupoId)[0]
+      const filtered = data.filter((estudiante) => idsGruposDocente.includes(estudiante.grupoId));
 
-        if(grupoEstudiante !== undefined) {
-          const result = {
+      const withGrupoName = await Promise.all(
+        filtered.map(async (estudiante) => {
+          const grupoEstudiante = grupos.data.find((el) => el.id === estudiante.grupoId);
+          
+          // const rfid = await rfidService.getOne(estudiante.id);
+          const rfid = (await prisma.rfid.findMany()).find(el => el.estudianteId === estudiante.id)
+
+          const uid = rfid ? rfid.uid : null;
+
+          const result: EstudianteReturn = {
             ...estudiante,
-            grupoName: String(`Grupo ${grupoEstudiante.codigo}`)
-          }
-          console.log("abeja")
-          return result
-        }
-        return estudiante
-      })
+            grupoName: grupoEstudiante ? `Grupo ${grupoEstudiante.codigo}` : '',
+            rfid: uid
+          };
 
-      return returnProvider(withGrupoName, 'Estudiantes fetched', true)
+          return result;
+        })
+      );
+
+      return returnProvider(withGrupoName, 'Estudiantes fetched', true);
     } catch (error) {
-      return returnProvider([], String(error), false)
+      return returnProvider([], String(error), false);
     }
   }
 }
+
+export default EstudianteService;
