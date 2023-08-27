@@ -1,4 +1,4 @@
-import { CreateInput, UpdateInput} from '../schemas/clase.schemas'
+import { CreateInput, UpdateInput} from '../schemas/clases.schemas'
 import { returnProvider } from '../utils/providers/ReturnProvider'
 import { prisma } from '../lib/prisma'
 
