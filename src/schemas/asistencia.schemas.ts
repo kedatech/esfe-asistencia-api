@@ -3,15 +3,15 @@ import { stringToInt } from '../utils/validators/stringParseable'
 import { parseableDate } from '../utils/validators/dateParseable'
 
 const id = z.number({required_error: 'El ID del ciclo  es requerido'}).int().positive()
-const name = z.string({required_error : 'El nombre es requerido' })
-const startDate = parseableDate
-const endDate = parseableDate
+const uid = z.string({required_error : 'El uid es requerido' })
+const fecha = parseableDate
 
 export const createSchema = object({
   body: object({
-    name,
-    startDate,
-    endDate
+    uid,
+    fecha,
+    nomenclaturaId: id,
+    criterioId: id
   }).strict(),
 });
 
@@ -20,12 +20,11 @@ export const updateSchema = object({
     id: stringToInt
   }),
   body: object({
-    name: name.optional(),
-    capacity: startDate.optional(),
-    TypeId: endDate.optional()
+    nomenclaturaId: id,
+    criterioId: id
   })
     .partial()
-    .refine((data) => data.capacity !== undefined || data.TypeId !== undefined, {
+    .refine((data) => data.nomenclaturaId !== undefined || data.criterioId !== undefined, {
       message: 'Al menos una propiedad debe ser proporcionada para actualizar',
     }),
 });
@@ -41,6 +40,9 @@ export const getSchema = object({
     id: stringToInt
   })
 });
+
+
+
 
 export type CreateInput = TypeOf<typeof createSchema>['body'];
 export type UpdateInput = TypeOf<typeof updateSchema>['body'];

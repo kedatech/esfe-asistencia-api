@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { createSchema, deleteSchema, updateSchema} from '../schemas/espacio.schemas'
+import { createSchema, deleteSchema, updateSchema} from '../schemas/cicloClase.schemas'
 import { validate } from '../../middlewares/validate'
 import { CicloClaseServices } from '../services/cicloClase.services'
 
