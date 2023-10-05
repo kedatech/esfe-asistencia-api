@@ -18,3 +18,27 @@ export const duracionesClase = [
   }
 ]
 
+export const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado']
+
+export const criterios = [
+  {
+    nombre: 'SESIÓN PRESENCIAL',
+    descripcion: 'Cuando el estudiante asiste a la clase presencial'
+  },
+  {
+    nombre: 'SESIÓN SINCRÓNICA',
+    descripcion: 'Cuando el estudiante participa en sesión sincrónica programada'
+  },
+  {
+    nombre: 'SESIÓN ASINCRÓNICA',
+    descripcion: 'Cuando el estudiante realiza actividades de aprendizaje programadas para ser realizadas de forma virtual con asesoría del docente'
+  },
+  {
+    nombre: 'N/A',
+    descripcion: 'Por asueto o suspensión debido a emergencias emitidas por parte de las autoridades.'
+  },
+  {
+    nombre: 'NO ASISTIÓ',
+    descripcion: 'Cuando el estudiante no asiste de forma presencial o no participa en sesión sincrónica o asincrónica programada'
+  }
+];

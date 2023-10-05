@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { duracionesClase, espacioTypes, virtualEspacios} from './defaultData'
+import { duracionesClase, espacioTypes, virtualEspacios, dias, criterios} from './defaultData'
 
 const prisma = new PrismaClient()
 
@@ -27,15 +27,23 @@ async function main() {
 		}
 	})
 
+	criterios.forEach(async (el) => {
+    const turno = await prisma.criterio.upsert({
+      where: { nombre: el.nombre },
+      update: {},
+      create: { nombre: el.nombre, descripcion: el.descripcion },
+    })
+    console.log('turno', turno)
+  })
 
-  // turnos.forEach(async (el) => {
-  //   const turno = await prisma.turno.upsert({
-  //     where: { name: el },
-  //     update: {},
-  //     create: { name: el },
-  //   })
-  //   console.log('turno', turno)
-  // })
+  dias.forEach(async (el) => {
+    const turno = await prisma.dia.upsert({
+      where: { name: el },
+      update: {},
+      create: { name: el },
+    })
+    console.log('turno', turno)
+  })
 
   duracionesClase.forEach(async (el) => {
     const duracion = await prisma.duracion.upsert({

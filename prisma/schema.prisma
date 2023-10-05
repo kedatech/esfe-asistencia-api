@@ -128,7 +128,7 @@ model Clase {
   espacioId  Int
   espacio    Espacio    @relation(fields: [espacioId], references: [id])
   duracionId Int
-  duracion   Duracion   @relation(fields: [duracionId], references: [id])
+  duracion   Duracion?   @relation(fields: [duracionId], references: [id])
   diaId      Int
   dia        Dia        @relation(fields: [diaId], references: [id])
   docenteId  Int
@@ -179,10 +179,10 @@ model Asistencia {
   id             Int          @id @default(autoincrement())
   estudianteId   Int
   fecha          DateTime
-  nomenclaturaId Int
+  nomenclaturaId Int?
   criterioId     Int
   // estudiante     Estudiante   @relation(fields: [estudianteId], references: [id])
-  nomenclatura   Nomenclatura @relation(fields: [nomenclaturaId], references: [id])
+  nomenclatura   Nomenclatura? @relation(fields: [nomenclaturaId], references: [id])
   criterio       Criterio     @relation(fields: [criterioId], references: [id])
   createAt       DateTime     @default(now())
 }
