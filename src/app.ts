@@ -4,6 +4,14 @@ import config from 'config';
 import validateEnv from './utils/validateEnv';
 import { PrismaClient } from '@prisma/client';
 
+// import { ModuloService } from "./services/external/modulo.services"
+// const docente = new ModuloService()
+// const result = docente.getAll().then(
+//   el => {
+//     console.log(el)
+//   }
+// )
+
 import routes from './routes'
 
 // validateEnv();

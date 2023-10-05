@@ -1,4 +1,4 @@
-@api = http://localhost:8000/api
+@api = https://esfe-asistencia-api-dev.fl0.io/api
 
 ### Obtener lista de estudiantes
 GET {{api}}/estudiante

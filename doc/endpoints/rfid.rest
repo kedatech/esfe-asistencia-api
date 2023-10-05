@@ -1,4 +1,4 @@
-@api = http://localhost:8000/api
+@api = https://esfe-asistencia-api-dev.fl0.io/api
 
 ### Obtener lista de rfids
 GET {{api}}/rfid
@@ -13,7 +13,7 @@ content-type: application/json
 }
 
 ### Eliminar un rfid
-DELETE {{api}}/rfid/1
+DELETE {{api}}/rfid/3
 
 ### Actualizar parcialmente un rfid
 PATCH {{api}}/rfid/1

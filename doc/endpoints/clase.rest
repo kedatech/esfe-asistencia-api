@@ -1,0 +1,33 @@
+@api = http://localhost:8000/api
+
+### Obtener lista de clase
+GET {{api}}/clase
+
+### Crear un nuevo clase
+POST {{api}}/clase
+content-type: application/json
+
+{
+    "cicloId": 1,
+    "espacioId": 2,
+    "duracionId": 3,
+    "diaId": 101,
+    "docenteId": 202,
+    "grupoId": 303,
+    "moduloId": 404,
+    "startDate": "2023-08-01T00:00:00.000Z",
+    "endDate": "2023-12-01T00:00:00.000Z"
+}
+
+### Eliminar un clase
+DELETE {{api}}/clase/3
+
+### Actualizar parcialmente un clase
+PATCH {{api}}/clase/1
+content-type: application/json
+
+{
+    "name": "Nombre Ejemplo",
+    "startDate": "2023-08-01T00:00:00Z",
+    "endDate": "2023-12-01T00:00:00Z"
+}
